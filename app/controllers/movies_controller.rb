@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
       @movies = Movie.all
       
     else
-      @movies = Movie.order(params[:sort])
+      @movies = Movie.order(@sort)
     end
   end
 
