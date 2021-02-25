@@ -6,9 +6,9 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th><%= link_to "Movie Title", :sort => "title"%></th>
+      <th><%= {:class => ('highlight' if @sort == 'title') } link_to "Movie Title", :sort => "title"%></th>
       <th>Rating</th>
-      <th><%= link_to "Release Date", :sort => "release_date"%></th>
+      <th><%= {:class => ('highlight' if @sort == 'release_date') } link_to "Release Date", :sort => "release_date"%></th>
       <th>More Info</th>
     </tr>
   </thead>
