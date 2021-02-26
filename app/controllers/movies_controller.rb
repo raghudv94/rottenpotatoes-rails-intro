@@ -7,12 +7,32 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @sort = params[:sort]
-    if @sort.nil?
-      @movies = Movie.all
-      
+    
+    if !params[:sort].nil?
+      @sort = params[:sort]
+      session[:sort] = @sort
     else
+      @sort = nil
+    end
+    
+    @ratings = params[:ratings] 
+    session[:ratings] = @ratings
+    
+    @all_ratings = Movie.ratings.inject(Hash.new) do |all_ratings, rating|
+      all_ratings[rating] = @ratings.nil? ? false : @ratings.has_key?(rating) 
+      all_ratings
+    end
+    
+    #@movies = Movie.all
+    if @sort.nil? && @ratings.nil?
+      @movies = Movie.all
+    elsif !@sort.nil? && !@ratings.nil?
+      @movies = Movie.where(:rating => @ratings.keys).order(@sort)
+      
+    elsif @ratings.nil?
       @movies = Movie.order(@sort)
+    else
+      @movies = Movie.where(:rating => @ratings.keys)
     end
   end
 
