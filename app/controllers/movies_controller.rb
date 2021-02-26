@@ -8,6 +8,13 @@ class MoviesController < ApplicationController
 
   def index
     
+    @url = request.original_url
+    
+    if ! (@url =~ /movie/)
+      session[:ratings] = {}
+      session[:sort] = ""
+    end
+    
     if params[:commit] == "Refresh"
       session[:ratings] = {}
     end
